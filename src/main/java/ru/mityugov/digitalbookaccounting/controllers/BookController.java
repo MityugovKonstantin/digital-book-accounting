@@ -6,18 +6,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import ru.mityugov.digitalbookaccounting.dao.BookDao;
+import ru.mityugov.digitalbookaccounting.dao.PersonDao;
 import ru.mityugov.digitalbookaccounting.models.Book;
+import ru.mityugov.digitalbookaccounting.models.Person;
 
 @Controller
 @RequestMapping("/books")
 public class BookController {
 
     private final BookDao bookDao;
+    private final PersonDao personDao;
 
     @Autowired
-    public BookController(BookDao bookDao) {
+    public BookController(BookDao bookDao, PersonDao personDao) {
         this.bookDao = bookDao;
+        this.personDao = personDao;
     }
 
     @GetMapping()
@@ -28,8 +33,27 @@ public class BookController {
 
     @GetMapping("/{id}")
     public String showBook(@PathVariable("id") int id, Model model) {
-        model.addAttribute("book", bookDao.getBook(id));
+        Book book = bookDao.getBook(id);
+
+        model.addAttribute("book", book);
+        model.addAttribute("people", personDao.getPeople());
+        if (book.getPersonId() != null)
+            model.addAttribute("person", personDao.getPersonById(book.getPersonId()));
+        else
+            model.addAttribute("person", new Person());
         return "book/book";
+    }
+
+    @PatchMapping("/{id}/assign")
+    public String assign(@PathVariable("id") int id, @ModelAttribute("person") Person person) {
+        bookDao.assign(id, person.getPersonId());
+        return ("redirect:/books/" + id);
+    }
+
+    @PatchMapping("/{id}/detach")
+    public String detach(@PathVariable("id") int id) {
+        bookDao.detach(id);
+        return ("redirect:/books/" + id);
     }
 
     @GetMapping("/add")
