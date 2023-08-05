@@ -1,31 +1,34 @@
 package ru.mityugov.digitalbookaccounting.models;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 public class Person {
 
-    private int id;
+    private int personId;
 
     @NotEmpty(message = "Full name cannot be empty!")
     @Size(min = 1, max = 100, message = "Full name cannot be less than 1 and more than 100 characters!")
     private String fullName;
 
-    @NotEmpty(message = "Born year cannot be empty!")
+    @Min(value = 1800, message = "Born year cannot be less then 1800!")
     private int bornYear;
 
-    public Person(int id, String fullName, int bornYear) {
-        this.id = id;
+    public Person(int personId, String fullName, int bornYear) {
+        this.personId = personId;
         this.fullName = fullName;
         this.bornYear = bornYear;
     }
 
-    public int getId() {
-        return id;
+    public Person() {}
+
+    public int getPersonId() {
+        return personId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPersonId(int personId) {
+        this.personId = personId;
     }
 
     public String getFullName() {
