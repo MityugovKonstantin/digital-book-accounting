@@ -36,7 +36,7 @@ public class PeopleController {
     }
 
     @GetMapping("/add")
-    public String showAdditionalPerson(@ModelAttribute("person") Person person) {
+    public String showPersonAdditional(@ModelAttribute("person") Person person) {
         return "people/additional";
     }
 
@@ -52,7 +52,7 @@ public class PeopleController {
     }
 
     @GetMapping("/{id}/edit")
-    public String showUpdatingPerson(@PathVariable("id") int id, Model model) {
+    public String showPersonUpdating(@PathVariable("id") int id, Model model) {
         model.addAttribute("person", personDao.getPersonById(id));
         return "people/updating";
     }
