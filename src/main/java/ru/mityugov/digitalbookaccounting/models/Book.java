@@ -2,22 +2,22 @@ package ru.mityugov.digitalbookaccounting.models;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import org.springframework.lang.Nullable;
 
 public class Book {
 
     private int bookId;
 
-    private int personId;
+    private Integer personId;
 
     @NotEmpty(message = "Book name cannot be empty!")
     @Size(min = 1, max = 200, message = "Book name cannot be less than 1 and more than 200 characters!")
     private String name;
 
     @NotEmpty(message = "Book author cannot be empty!")
-    @Size(min = 1, max = 200, message = "Book author cannot be less than 1 and more than 100 characters!")
+    @Size(min = 1, max = 100, message = "Book author cannot be less than 1 and more than 100 characters!")
     private String author;
 
-    @NotEmpty(message = "Born year cannot be empty!")
     private int year;
 
     public Book(int bookId, int personId, String name, String author, int year) {
@@ -27,6 +27,8 @@ public class Book {
         this.author = author;
         this.year = year;
     }
+
+    public Book() {}
 
     public int getBookId() {
         return bookId;
