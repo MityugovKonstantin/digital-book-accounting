@@ -6,6 +6,13 @@
 </head>
 <body>
 
+<form th:method="GET" th:action="@{/books}">
+    <input type="submit" value="Back to the book list">
+</form>
+
+<br/>
+<hr/>
+
 <form th:method="POST" th:action="@{/books/add}" th:object="${book}">
 
     <label for="name">Enter name: </label>

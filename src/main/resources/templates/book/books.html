@@ -6,6 +6,13 @@
 </head>
 <body>
 
+<form th:method="GET" th:action="@{/index}">
+    <input type="submit" value="Back to the menu">
+</form>
+
+<br/>
+<hr/>
+
 <div th:each="book : ${books}">
     <a th:href="@{/books/{id}(id=${book.getBookId()})}"
        th:text="${book.getName() + ' - ' + book.getAuthor() + ', ' + book.getYear()}">book</a>

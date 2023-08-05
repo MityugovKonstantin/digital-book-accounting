@@ -8,6 +8,13 @@
 
 <body>
 
+<form th:method="GET" th:action="@{/books/{id}(id=${book.getBookId()})}">
+    <input type="submit" value="Back to the book">
+</form>
+
+<br/>
+<hr/>
+
 <form th:method="PATCH" th:action="@{/books/{id}/edit(id=${book.getBookId()})}" th:object="${book}">
 
     <label for="name">Enter name: </label>

@@ -8,6 +8,13 @@
 
 <body>
 
+<form th:method="GET" th:action="@{/people/{id}(id=${person.getPersonId()})}">
+    <input type="submit" value="Back to the person page">
+</form>
+
+<br/>
+<hr/>
+
 <form th:method="PATCH" th:action="@{/people/{id}/edit(id=${person.getPersonId()})}" th:object="${person}">
     <label for="fullName">Enter full name: </label>
     <input type="text" th:field="*{fullName}" id="fullName">

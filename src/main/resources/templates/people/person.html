@@ -6,6 +6,13 @@
 </head>
 <body>
 
+<form th:method="GET" th:action="@{/people}">
+    <input type="submit" value="Back to the people list">
+</form>
+
+<br/>
+<hr/>
+
 <p th:text="${person.getFullName() + ', ' + person.getBornYear()}"></p>
 
 <p th:if="${books.size() == 0}">Have not books.</p>

@@ -6,6 +6,13 @@
 </head>
 <body>
 
+<form th:method="GET" th:action="@{/index}">
+    <input type="submit" value="Back to the menu">
+</form>
+
+<br/>
+<hr/>
+
 <div th:each="person : ${people}">
     <a th:href="@{/people/{id}(id=${person.getPersonId()})}"
        th:text="${person.getFullName() + ', ' + person.getBornYear()}">user</a>
@@ -14,7 +21,9 @@
 <br/>
 <hr/>
 
-<a href="/people/add">Create new person</a>
+<form th:method="GET" th:action="@{/people/add}">
+    <input type="submit" value="Create new person">
+</form>
 
 </body>
 </html>

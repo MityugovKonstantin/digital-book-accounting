@@ -6,6 +6,13 @@
 </head>
 <body>
 
+<form th:method="GET" th:action="@{/people}">
+    <input type="submit" value="Back to the people list">
+</form>
+
+<br/>
+<hr/>
+
 <form th:method="POST" th:action="@{/people/add}" th:object="${person}">
     <label for="fullName">Enter full name: </label>
     <input type="text" th:field="*{fullName}" id="fullName">

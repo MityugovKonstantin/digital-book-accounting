@@ -6,6 +6,13 @@
 </head>
 <body>
 
+<form th:method="GET" th:action="@{/books}">
+    <input type="submit" value="Back to the book list">
+</form>
+
+<br/>
+<hr/>
+
 <p th:text="${book.getName() + ' - ' + book.getAuthor() + ', ' + book.getYear()}"></p>
 
 <form th:if="${book.getPersonId() == null}" th:method="PATCH"
