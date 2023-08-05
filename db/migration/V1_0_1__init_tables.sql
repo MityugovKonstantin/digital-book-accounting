@@ -8,5 +8,5 @@ INSERT INTO BOOK (PERSON_ID, NAME, AUTHOR, YEAR) VALUES (1, 'Чистый код
 INSERT INTO BOOK (PERSON_ID, NAME, AUTHOR, YEAR) VALUES (2, 'Война и мир. Том 1', 'Лев Толстой', 2022);
 INSERT INTO BOOK (PERSON_ID, NAME, AUTHOR, YEAR) VALUES (3, 'Война и мир. Том 2', 'Лев Толстой', 2022);
 INSERT INTO BOOK (PERSON_ID, NAME, AUTHOR, YEAR) VALUES (2, 'Война и мир. Том 3', 'Лев Толстой', 2022);
-INSERT INTO BOOK (PERSON_ID, NAME, AUTHOR, YEAR) VALUES (2, 'Война и мир. Том 4', 'Лев Толстой', 2022);
-INSERT INTO BOOK (PERSON_ID, NAME, AUTHOR, YEAR) VALUES (4, 'Основы Java', 'Николай Прохоренок', 2019);
+INSERT INTO BOOK (PERSON_ID, NAME, AUTHOR, YEAR) VALUES (null, 'Война и мир. Том 4', 'Лев Толстой', 2022);
+INSERT INTO BOOK (PERSON_ID, NAME, AUTHOR, YEAR) VALUES (null, 'Основы Java', 'Николай Прохоренок', 2019);
