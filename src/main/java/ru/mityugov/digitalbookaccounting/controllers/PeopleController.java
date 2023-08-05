@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import ru.mityugov.digitalbookaccounting.dao.BookDao;
 import ru.mityugov.digitalbookaccounting.dao.PersonDao;
 import ru.mityugov.digitalbookaccounting.models.Person;
@@ -47,10 +48,8 @@ public class PeopleController {
     @PostMapping("/add")
     public String addPerson(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
         personValidator.validate(person, bindingResult);
-
         if (bindingResult.hasErrors())
             return "people/additional";
-
         personDao.add(person);
         return "redirect:/people";
     }
@@ -65,12 +64,11 @@ public class PeopleController {
     public String updatePerson(
             @ModelAttribute("person") @Valid Person person,
             BindingResult bindingResult,
-            @PathVariable("id") int id) {
+            @PathVariable("id") int id
+    ) {
         personValidator.validate(person, bindingResult);
-
         if (bindingResult.hasErrors())
             return "people/updating";
-
         personDao.update(id, person);
         return "redirect:/people";
     }

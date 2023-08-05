@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+
 import ru.mityugov.digitalbookaccounting.models.Book;
 
 import java.util.List;
@@ -12,7 +13,8 @@ import java.util.List;
 public class BookDao {
 
     private final JdbcTemplate jdbcTemplate;
-    private static final BeanPropertyRowMapper<Book> BEAN_PROPERTY_ROW_MAPPER = new BeanPropertyRowMapper<>(Book.class);
+    private static final BeanPropertyRowMapper<Book> BEAN_PROPERTY_ROW_MAPPER
+            = new BeanPropertyRowMapper<>(Book.class);
 
     @Autowired
     public BookDao(JdbcTemplate jdbcTemplate) {

@@ -2,7 +2,6 @@ package ru.mityugov.digitalbookaccounting.models;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import org.springframework.lang.Nullable;
 
 public class Book {
 

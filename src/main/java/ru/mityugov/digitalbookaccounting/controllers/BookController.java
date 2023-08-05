@@ -37,10 +37,13 @@ public class BookController {
 
         model.addAttribute("book", book);
         model.addAttribute("people", personDao.getPeople());
-        if (book.getPersonId() != null)
+
+        if (book.getPersonId() != null) {
             model.addAttribute("person", personDao.getPersonById(book.getPersonId()));
-        else
+        } else {
             model.addAttribute("person", new Person());
+        }
+
         return "book/book";
     }
 
@@ -65,7 +68,6 @@ public class BookController {
     public String addBook(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "book/additional";
-
         bookDao.add(book);
         return "redirect:/books";
     }
@@ -83,7 +85,6 @@ public class BookController {
             @PathVariable("id") int id) {
         if (bindingResult.hasErrors())
             return "book/updating";
-
         bookDao.update(id, book);
         return "redirect:/books";
     }
