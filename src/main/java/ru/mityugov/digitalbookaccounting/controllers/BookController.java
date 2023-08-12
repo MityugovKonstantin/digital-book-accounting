@@ -7,56 +7,45 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import ru.mityugov.digitalbookaccounting.dao.BookDao;
-import ru.mityugov.digitalbookaccounting.dao.PersonDao;
 import ru.mityugov.digitalbookaccounting.models.Book;
 import ru.mityugov.digitalbookaccounting.models.Person;
+import ru.mityugov.digitalbookaccounting.services.BooksService;
+import ru.mityugov.digitalbookaccounting.services.PeopleService;
 
 @Controller
 @RequestMapping("/books")
 public class BookController {
 
-    private final BookDao bookDao;
-    private final PersonDao personDao;
+    private final PeopleService peopleService;
+
+    private final BooksService booksService;
 
     @Autowired
-    public BookController(BookDao bookDao, PersonDao personDao) {
-        this.bookDao = bookDao;
-        this.personDao = personDao;
+    public BookController(PeopleService peopleService, BooksService booksService) {
+        this.peopleService = peopleService;
+        this.booksService = booksService;
     }
 
     @GetMapping()
     public String showBooks(Model model) {
-        model.addAttribute("books", bookDao.getBooks());
+        model.addAttribute("books", booksService.findAll());
         return "book/books";
     }
 
     @GetMapping("/{id}")
     public String showBook(@PathVariable("id") int id, Model model) {
-        Book book = bookDao.getBook(id);
+        Book book = booksService.findOne(id);
 
         model.addAttribute("book", book);
-        model.addAttribute("people", personDao.getPeople());
+        model.addAttribute("people", peopleService.findAll());
 
-        if (book.getPersonId() != null) {
-            model.addAttribute("person", personDao.getPersonById(book.getPersonId()));
+        if (book.getOwner() != null) {
+            model.addAttribute("person", peopleService.findOne(book.getOwner().getPersonId()));
         } else {
             model.addAttribute("person", new Person());
         }
 
         return "book/book";
-    }
-
-    @PatchMapping("/{id}/assign")
-    public String assign(@PathVariable("id") int id, @ModelAttribute("person") Person person) {
-        bookDao.assign(id, person.getPersonId());
-        return ("redirect:/books/" + id);
-    }
-
-    @PatchMapping("/{id}/detach")
-    public String detach(@PathVariable("id") int id) {
-        bookDao.detach(id);
-        return ("redirect:/books/" + id);
     }
 
     @GetMapping("/add")
@@ -65,16 +54,21 @@ public class BookController {
     }
 
     @PostMapping("/add")
-    public String addBook(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult) {
+    public String addBook(
+            @ModelAttribute("person") Person person,
+            @ModelAttribute("book") @Valid Book book,
+            BindingResult bindingResult
+    ) {
         if (bindingResult.hasErrors())
             return "book/additional";
-        bookDao.add(book);
+        book.setOwner(peopleService.findOne(person.getPersonId()));
+        booksService.save(book);
         return "redirect:/books";
     }
 
     @GetMapping("/{id}/edit")
     public String showBookUpdating(@PathVariable("id") int id, Model model) {
-        model.addAttribute("book", bookDao.getBook(id));
+        model.addAttribute("book", booksService.findOne(id));
         return "book/updating";
     }
 
@@ -85,13 +79,25 @@ public class BookController {
             @PathVariable("id") int id) {
         if (bindingResult.hasErrors())
             return "book/updating";
-        bookDao.update(id, book);
+        booksService.update(id, book);
         return "redirect:/books";
     }
 
     @DeleteMapping("/{id}")
     public String deleteBook(@PathVariable("id") int id) {
-        bookDao.delete(id);
+        booksService.delete(id);
         return "redirect:/books";
+    }
+
+    @PatchMapping("/{id}/assign")
+    public String assign(@PathVariable("id") int id, @ModelAttribute("person") Person person) {
+        booksService.assign(id, person);
+        return ("redirect:/books/" + id);
+    }
+
+    @PatchMapping("/{id}/detach")
+    public String detach(@PathVariable("id") int id) {
+        booksService.detach(id);
+        return ("redirect:/books/" + id);
     }
 }

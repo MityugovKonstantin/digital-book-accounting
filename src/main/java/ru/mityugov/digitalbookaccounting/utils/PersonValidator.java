@@ -5,17 +5,17 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import ru.mityugov.digitalbookaccounting.dao.PersonDao;
 import ru.mityugov.digitalbookaccounting.models.Person;
+import ru.mityugov.digitalbookaccounting.services.PeopleService;
 
 @Component
 public class PersonValidator implements Validator {
 
-    private final PersonDao personDao;
+    private final PeopleService peopleService;
 
     @Autowired
-    public PersonValidator(PersonDao personDao) {
-        this.personDao = personDao;
+    public PersonValidator(PeopleService peopleService) {
+        this.peopleService = peopleService;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class PersonValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Person person = (Person) target;
-        if (personDao.getPersonByFullName(person.getFullName()).isPresent())
+        if (peopleService.findOne(person.getFullName()) != null)
             errors.rejectValue("fullName", "", "This full name is already taken!");
     }
 }

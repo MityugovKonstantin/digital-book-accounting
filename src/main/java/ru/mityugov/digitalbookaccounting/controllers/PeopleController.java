@@ -7,36 +7,39 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import ru.mityugov.digitalbookaccounting.dao.BookDao;
-import ru.mityugov.digitalbookaccounting.dao.PersonDao;
 import ru.mityugov.digitalbookaccounting.models.Person;
+import ru.mityugov.digitalbookaccounting.services.BooksService;
+import ru.mityugov.digitalbookaccounting.services.PeopleService;
 import ru.mityugov.digitalbookaccounting.utils.PersonValidator;
 
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
 
-    private final PersonDao personDao;
-    private final BookDao bookDao;
+    private final PeopleService peopleService;
+
+    private final BooksService booksService;
+
     private final PersonValidator personValidator;
 
     @Autowired
-    public PeopleController(PersonDao personDao, BookDao bookDao, PersonValidator personValidator) {
-        this.personDao = personDao;
-        this.bookDao = bookDao;
+    public PeopleController(PeopleService peopleService, BooksService booksService, PersonValidator personValidator) {
+        this.peopleService = peopleService;
+        this.booksService = booksService;
         this.personValidator = personValidator;
     }
 
     @GetMapping()
     public String showPeople(Model model) {
-        model.addAttribute("people", personDao.getPeople());
+        model.addAttribute("people", peopleService.findAll());
         return "people/people";
     }
 
     @GetMapping("/{id}")
     public String showPerson(@PathVariable("id") int id, Model model) {
-        model.addAttribute("books", bookDao.getBooks(id));
-        model.addAttribute("person", personDao.getPersonById(id));
+        Person owner = peopleService.findOne(id);
+        model.addAttribute("books", booksService.findAllByOwner(owner));
+        model.addAttribute("person", peopleService.findOne(id));
         return "people/person";
     }
 
@@ -50,13 +53,13 @@ public class PeopleController {
         personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors())
             return "people/additional";
-        personDao.add(person);
+        peopleService.save(person);
         return "redirect:/people";
     }
 
     @GetMapping("/{id}/edit")
     public String showPersonUpdating(@PathVariable("id") int id, Model model) {
-        model.addAttribute("person", personDao.getPersonById(id));
+        model.addAttribute("person", peopleService.findOne(id));
         return "people/updating";
     }
 
@@ -69,13 +72,13 @@ public class PeopleController {
         personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors())
             return "people/updating";
-        personDao.update(id, person);
+        peopleService.update(id, person);
         return "redirect:/people";
     }
 
     @DeleteMapping("/{id}")
     public String deletePerson(@PathVariable("id") int id) {
-        personDao.delete(id);
+        peopleService.delete(id);
         return "redirect:/people";
     }
 
