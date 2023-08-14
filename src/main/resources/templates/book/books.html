@@ -9,11 +9,20 @@
 <form th:method="GET" th:action="@{/index}">
     <input type="submit" value="Back to the menu">
 </form>
-
-<br/>
 <hr/>
 
-<div th:each="book : ${books}">
+
+<a>Sort by:</a>
+<a th:href="@{/books?sort=name}">name</a>
+<a th:href="@{/books?sort=year}">year</a>
+<hr/>
+
+<a th:if="${page.hasPrevious()}" th:href="@{/books?page={page_number}(page_number=${page.number - 1})}">Previous</a>
+<br/>
+<a th:if="${page.hasNext()}" th:href="@{/books?page={page_number}(page_number=${page.number + 1})}">Next</a>
+<hr/>
+
+<div th:each="book : ${page.getContent()}">
     <a th:href="@{/books/{id}(id=${book.getBookId()})}"
        th:text="${book.getName() + ' - ' + book.getAuthor() + ', ' + book.getYear()}">book</a>
 </div>
@@ -22,6 +31,12 @@
 <hr/>
 
 <a href="/books/add">Create new book</a>
+
+<div th:each="i : ${#numbers.sequence(0, page.getTotalPages() - 1)}">
+    <a th:if="${i != page.getNumber()}"
+       th:href="@{/books(page=${i},sort=${sort})}"
+       th:text="${i + 1}">number of page</a>
+</div>
 
 </body>
 </html>

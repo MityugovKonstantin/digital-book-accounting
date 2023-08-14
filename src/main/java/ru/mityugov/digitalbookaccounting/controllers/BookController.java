@@ -2,6 +2,8 @@ package ru.mityugov.digitalbookaccounting.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,8 +29,10 @@ public class BookController {
     }
 
     @GetMapping()
-    public String showBooks(Model model) {
-        model.addAttribute("books", booksService.findAll());
+    public String showBooks(@PageableDefault(size = 5) Pageable pageable, Model model) {
+        var page = booksService.findAll(pageable);
+        model.addAttribute("sort", getSort(pageable));
+        model.addAttribute("page", page);
         return "book/books";
     }
 
@@ -99,5 +103,11 @@ public class BookController {
     public String detach(@PathVariable("id") int id) {
         booksService.detach(id);
         return ("redirect:/books/" + id);
+    }
+
+    // TODO
+    private String getSort(Pageable pageable) {
+        String sort = pageable.getSort().toString().split(":")[0];
+        return sort.equals("UNSORTED") ? "" : sort;
     }
 }

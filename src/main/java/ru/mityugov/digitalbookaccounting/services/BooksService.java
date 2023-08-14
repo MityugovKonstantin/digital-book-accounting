@@ -1,6 +1,8 @@
 package ru.mityugov.digitalbookaccounting.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +23,8 @@ public class BooksService {
         this.booksRepository = booksRepository;
     }
 
-    public List<Book> findAll() {
-        return booksRepository.findAll();
+    public Page<Book> findAll(Pageable pageable) {
+        return booksRepository.findAll(pageable);
     }
 
     public List<Book> findAllByOwner(Person owner) {
