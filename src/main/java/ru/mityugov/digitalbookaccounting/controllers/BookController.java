@@ -70,6 +70,16 @@ public class BookController {
         return "redirect:/books";
     }
 
+    @GetMapping("/search")
+    public String showSearcher(
+            @RequestParam(value = "starting_with", required = false) String startingWith,
+            Model model
+    ) {
+        model.addAttribute("isStarting", startingWith == null || startingWith.isEmpty());
+        model.addAttribute("books", booksService.findByNameStartingWith(startingWith));
+        return "book/searcher";
+    }
+
     @GetMapping("/{id}/edit")
     public String showBookUpdating(@PathVariable("id") int id, Model model) {
         model.addAttribute("book", booksService.findOne(id));

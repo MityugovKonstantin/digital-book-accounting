@@ -15,6 +15,10 @@
 <a>Sort by:</a>
 <a th:href="@{/books?sort=name}">name</a>
 <a th:href="@{/books?sort=year}">year</a>
+<br/>
+<form th:method="GET" th:action="@{/books/search}">
+    <input type="submit" value="Search">
+</form>
 <hr/>
 
 <a th:if="${page.hasPrevious()}" th:href="@{/books?page={page_number}(page_number=${page.number - 1})}">Previous</a>

@@ -35,6 +35,11 @@ public class BooksService {
         return booksRepository.findById(id).orElse(null);
     }
 
+    public List<Book> findByNameStartingWith(String startingWith) {
+        if (startingWith == null || startingWith.isEmpty()) return null;
+        return booksRepository.findByNameStartingWith(startingWith);
+    }
+
     @Transactional
     public void save(Book book) {
         booksRepository.save(book);
