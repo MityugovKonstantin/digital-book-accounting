@@ -20,7 +20,11 @@
     <hr/>
     <p>Books:</p>
     <div th:each="book : ${books}">
-        <a th:text="${book.getName() + ' - ' + book.getAuthor() + ', ' + book.getYear()}">book</a>
+        <a style="color: red"
+           th:if="${book.isOverdue()}"
+           th:text="${book.getName() + ' - ' + book.getAuthor() + ', ' + book.getYear()} + ' (book is overdue)'">book</a>
+        <a th:if="${!book.isOverdue()}"
+           th:text="${book.getName() + ' - ' + book.getAuthor() + ', ' + book.getYear()}">book</a>
     </div>
 </div>
 

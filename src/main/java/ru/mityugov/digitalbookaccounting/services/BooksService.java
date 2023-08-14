@@ -10,6 +10,7 @@ import ru.mityugov.digitalbookaccounting.models.Book;
 import ru.mityugov.digitalbookaccounting.models.Person;
 import ru.mityugov.digitalbookaccounting.repositories.BooksRepository;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -61,6 +62,7 @@ public class BooksService {
         Book book = booksRepository.findById(id).orElse(null);
         if (book != null) {
             book.setOwner(person);
+            book.setAttachmentDate(new Date());
             booksRepository.save(book);
         }
     }
@@ -70,6 +72,7 @@ public class BooksService {
         Book book = booksRepository.findById(id).orElse(null);
         if (book != null) {
             book.setOwner(null);
+            book.setAttachmentDate(null);
             booksRepository.save(book);
         }
     }

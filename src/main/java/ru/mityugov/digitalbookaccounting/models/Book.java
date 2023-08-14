@@ -3,6 +3,10 @@ package ru.mityugov.digitalbookaccounting.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @Entity
 @Table(name = "book")
@@ -28,6 +32,10 @@ public class Book {
 
     @Column(name = "year")
     private Integer year;
+
+    @Column(name = "attachment_date")
+    @Temporal(TemporalType.DATE)
+    private Date attachmentDate;
 
     public Book(String name, String author, int year) {
         this.name = name;
@@ -75,5 +83,19 @@ public class Book {
 
     public void setOwner(Person owner) {
         this.owner = owner;
+    }
+
+    public Date getAttachmentDate() {
+        return attachmentDate;
+    }
+
+    public void setAttachmentDate(Date attachmentDate) {
+        this.attachmentDate = attachmentDate;
+    }
+
+    public boolean isOverdue() {
+        long diffInMillis = Math.abs(System.currentTimeMillis() - attachmentDate.getTime());
+        long diff = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+        return diff > 10;
     }
 }
