@@ -23,30 +23,13 @@
         <flyway.url>jdbc:postgresql://localhost:5430/digital-book-accounting</flyway.url>
         <flyway.locations>filesystem:db/migration</flyway.locations>
 
-        <spring.version>6.0.8</spring.version>
         <spring.boot.version>3.1.2</spring.boot.version>
     </properties>
 
     <dependencies>
-
-        <!-- Spring dependencies -->
-
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>${spring.boot.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot</artifactId>
-            <version>${spring.boot.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>${spring.boot.version}</version>
             <!-- Spring boot has a transitive vulnerable dependency maven:org.yaml:snakeyaml:1.33, so we exclude it -->
             <exclusions>
                 <exclusion>
@@ -56,39 +39,31 @@
             </exclusions>
         </dependency>
 
-        <!-- Hibernate dependencies -->
-
         <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>8.0.1.Final</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>6.2.7.Final</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
-        <!-- Other dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.6.0</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf-spring6</artifactId>
-            <version>3.1.1.RELEASE</version>
-        </dependency>
-
     </dependencies>
 
     <build>
