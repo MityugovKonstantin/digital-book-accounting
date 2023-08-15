@@ -37,6 +37,9 @@ public class Book {
     @Temporal(TemporalType.DATE)
     private Date attachmentDate;
 
+    @Transient
+    private boolean isOverdue;
+
     public Book(String name, String author, int year) {
         this.name = name;
         this.author = author;
@@ -94,8 +97,10 @@ public class Book {
     }
 
     public boolean isOverdue() {
-        long diffInMillis = Math.abs(System.currentTimeMillis() - attachmentDate.getTime());
-        long diff = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
-        return diff > 10;
+        return isOverdue;
+    }
+
+    public void setOverdue(boolean overdue) {
+        isOverdue = overdue;
     }
 }

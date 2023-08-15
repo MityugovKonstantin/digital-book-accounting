@@ -12,6 +12,7 @@ import ru.mityugov.digitalbookaccounting.repositories.BooksRepository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Transactional(readOnly = true)
@@ -29,7 +30,15 @@ public class BooksService {
     }
 
     public List<Book> findAllByOwner(Person owner) {
-        return booksRepository.findByOwner(owner);
+        List<Book> books = booksRepository.findByOwner(owner);
+
+        for (Book book : books) {
+            long diffInMillis = Math.abs(System.currentTimeMillis() - book.getAttachmentDate().getTime());
+            long diff = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+            if (diff > 10) book.setOverdue(true);
+        }
+
+        return books;
     }
 
     public Book findOne(int id) {
