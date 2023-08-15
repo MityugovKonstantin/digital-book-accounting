@@ -3,10 +3,8 @@ package ru.mityugov.digitalbookaccounting.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 @Entity
 @Table(name = "book")

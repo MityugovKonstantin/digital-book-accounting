@@ -65,6 +65,4 @@ public class DigitalBookAccountingApplication {
 
         return em;
     }
-
-
 }

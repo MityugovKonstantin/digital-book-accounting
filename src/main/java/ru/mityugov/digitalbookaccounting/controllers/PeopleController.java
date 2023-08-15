@@ -81,5 +81,4 @@ public class PeopleController {
         peopleService.delete(id);
         return "redirect:/people";
     }
-
 }

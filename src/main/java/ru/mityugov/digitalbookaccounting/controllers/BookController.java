@@ -115,7 +115,6 @@ public class BookController {
         return ("redirect:/books/" + id);
     }
 
-    // TODO
     private String getSort(Pageable pageable) {
         String sort = pageable.getSort().toString().split(":")[0];
         return sort.equals("UNSORTED") ? "" : sort;
