@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import ru.mityugov.digitalbookaccounting.models.Book;
 import ru.mityugov.digitalbookaccounting.models.Person;
 import ru.mityugov.digitalbookaccounting.services.BooksService;
@@ -41,11 +40,11 @@ public class BookController {
         Book book = booksService.findOne(id);
 
         model.addAttribute("book", book);
-        model.addAttribute("people", peopleService.findAll());
 
         if (book.getOwner() != null) {
             model.addAttribute("person", peopleService.findOne(book.getOwner().getPersonId()));
         } else {
+            model.addAttribute("people", peopleService.findAll());
             model.addAttribute("person", new Person());
         }
 
