@@ -40,13 +40,7 @@ public class BookController {
         Book book = booksService.findOne(id);
 
         model.addAttribute("book", book);
-
-        if (book.getOwner() != null) {
-            model.addAttribute("person", peopleService.findOne(book.getOwner().getPersonId()));
-        } else {
-            model.addAttribute("people", peopleService.findAll());
-            model.addAttribute("person", new Person());
-        }
+        peopleService.findOwner(model, book);
 
         return "book/book";
     }
@@ -58,13 +52,11 @@ public class BookController {
 
     @PostMapping("/add")
     public String addBook(
-            @ModelAttribute("person") Person person,
             @ModelAttribute("book") @Valid Book book,
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors())
             return "book/additional";
-        book.setOwner(peopleService.findOne(person.getPersonId()));
         booksService.save(book);
         return "redirect:/books";
     }

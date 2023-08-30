@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import ru.mityugov.digitalbookaccounting.models.Book;
 import ru.mityugov.digitalbookaccounting.models.Person;
 import ru.mityugov.digitalbookaccounting.repositories.PeopleRepository;
 
@@ -30,6 +32,15 @@ public class PeopleService {
 
     public Person findOne(String fullName) {
         return peopleRepository.findByFullName(fullName);
+    }
+
+    public void findOwner(Model model, Book book) {
+        if (book.getOwner() != null) {
+            model.addAttribute("person", findOne(book.getOwner().getPersonId()));
+        } else {
+            model.addAttribute("people", findAll());
+            model.addAttribute("person", new Person());
+        }
     }
 
     @Transactional

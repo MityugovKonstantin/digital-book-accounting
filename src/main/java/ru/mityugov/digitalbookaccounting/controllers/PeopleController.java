@@ -39,7 +39,7 @@ public class PeopleController {
     public String showPerson(@PathVariable("id") int id, Model model) {
         Person owner = peopleService.findOne(id);
         model.addAttribute("books", booksService.findAllByOwner(owner));
-        model.addAttribute("person", peopleService.findOne(id));
+        model.addAttribute("person", owner);
         return "people/person";
     }
 
