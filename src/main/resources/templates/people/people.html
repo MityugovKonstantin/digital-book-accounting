@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>People</title>
+</head>
+<body>
+
+<form th:method="GET" th:action="@{/index}">
+    <input type="submit" value="Back to the menu">
+</form>
+
+<br/>
+<hr/>
+
+<div th:each="person : ${people}">
+    <a th:href="@{/people/{id}(id=${person.getPersonId()})}"
+       th:text="${person.getFullName() + ', ' + person.getBornYear()}">user</a>
+</div>
+
+<br/>
+<hr/>
+
+<form th:method="GET" th:action="@{/people/add}">
+    <input type="submit" value="Create new person">
+</form>
+
+</body>
+</html>

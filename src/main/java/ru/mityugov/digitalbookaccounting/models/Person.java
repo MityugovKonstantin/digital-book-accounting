@@ -1,31 +1,47 @@
 package ru.mityugov.digitalbookaccounting.models;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
+import java.util.List;
+
+@Entity
+@Table(name = "person")
 public class Person {
 
-    private int id;
+    @Id
+    @Column(name = "person_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int personId;
 
+    @Column(name = "full_name")
     @NotEmpty(message = "Full name cannot be empty!")
     @Size(min = 1, max = 100, message = "Full name cannot be less than 1 and more than 100 characters!")
     private String fullName;
 
-    @NotEmpty(message = "Born year cannot be empty!")
+    @Column(name = "born_year")
+    @Min(value = 1800, message = "Born year cannot be less then 1800!")
     private int bornYear;
 
-    public Person(int id, String fullName, int bornYear) {
-        this.id = id;
+    @OneToMany(mappedBy = "owner")
+    List<Book> books;
+
+    public Person(String fullName, int bornYear) {
         this.fullName = fullName;
         this.bornYear = bornYear;
     }
 
-    public int getId() {
-        return id;
+    public Person() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(int personId) {
+        this.personId = personId;
     }
 
     public String getFullName() {
@@ -42,5 +58,13 @@ public class Person {
 
     public void setBornYear(int bornYear) {
         this.bornYear = bornYear;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }

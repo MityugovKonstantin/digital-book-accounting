@@ -1,31 +1,50 @@
 package ru.mityugov.digitalbookaccounting.models;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
+import java.util.Date;
+
+@Entity
+@Table(name = "book")
 public class Book {
 
+    @Id
+    @Column(name = "book_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bookId;
 
-    private int personId;
+    @ManyToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "person_id")
+    private Person owner;
 
+    @Column(name = "name")
     @NotEmpty(message = "Book name cannot be empty!")
     @Size(min = 1, max = 200, message = "Book name cannot be less than 1 and more than 200 characters!")
     private String name;
 
-    @NotEmpty(message = "Book author cannot be empty!")
-    @Size(min = 1, max = 200, message = "Book author cannot be less than 1 and more than 100 characters!")
+    @Column(name = "author")
+    @Size(min = 1, max = 100, message = "Book author cannot be less than 1 and more than 100 characters!")
     private String author;
 
-    @NotEmpty(message = "Born year cannot be empty!")
-    private int year;
+    @Column(name = "year")
+    private Integer year;
 
-    public Book(int bookId, int personId, String name, String author, int year) {
-        this.bookId = bookId;
-        this.personId = personId;
+    @Column(name = "attachment_date")
+    @Temporal(TemporalType.DATE)
+    private Date attachmentDate;
+
+    @Transient
+    private boolean isOverdue;
+
+    public Book(String name, String author, int year) {
         this.name = name;
         this.author = author;
         this.year = year;
+    }
+
+    public Book() {
     }
 
     public int getBookId() {
@@ -34,14 +53,6 @@ public class Book {
 
     public void setBookId(int bookId) {
         this.bookId = bookId;
-    }
-
-    public int getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(int personId) {
-        this.personId = personId;
     }
 
     public String getName() {
@@ -60,11 +71,35 @@ public class Book {
         this.author = author;
     }
 
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(Integer year) {
         this.year = year;
+    }
+
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Person owner) {
+        this.owner = owner;
+    }
+
+    public Date getAttachmentDate() {
+        return attachmentDate;
+    }
+
+    public void setAttachmentDate(Date attachmentDate) {
+        this.attachmentDate = attachmentDate;
+    }
+
+    public boolean isOverdue() {
+        return isOverdue;
+    }
+
+    public void setOverdue(boolean overdue) {
+        isOverdue = overdue;
     }
 }
