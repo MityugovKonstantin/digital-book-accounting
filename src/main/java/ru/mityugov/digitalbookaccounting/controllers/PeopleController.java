@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import ru.mityugov.digitalbookaccounting.models.Person;
 import ru.mityugov.digitalbookaccounting.services.BooksService;
 import ru.mityugov.digitalbookaccounting.services.PeopleService;

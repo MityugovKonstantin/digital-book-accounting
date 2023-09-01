@@ -40,7 +40,12 @@ public class BookController {
         Book book = booksService.findOne(id);
 
         model.addAttribute("book", book);
-        peopleService.findOwner(model, book);
+        if (book.getOwner() != null) {
+            model.addAttribute("person", peopleService.findOne(book.getOwner().getPersonId()));
+        } else {
+            model.addAttribute("people", peopleService.findAll());
+            model.addAttribute("person", new Person());
+        }
 
         return "book/book";
     }

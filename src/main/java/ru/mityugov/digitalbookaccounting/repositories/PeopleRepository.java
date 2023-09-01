@@ -2,7 +2,6 @@ package ru.mityugov.digitalbookaccounting.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
 import ru.mityugov.digitalbookaccounting.models.Person;
 
 @Repository

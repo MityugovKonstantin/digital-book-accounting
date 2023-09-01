@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import ru.mityugov.digitalbookaccounting.models.Book;
 import ru.mityugov.digitalbookaccounting.models.Person;
 import ru.mityugov.digitalbookaccounting.repositories.BooksRepository;

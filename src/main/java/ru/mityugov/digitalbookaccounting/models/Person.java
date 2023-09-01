@@ -33,7 +33,8 @@ public class Person {
         this.bornYear = bornYear;
     }
 
-    public Person() {}
+    public Person() {
+    }
 
     public int getPersonId() {
         return personId;
